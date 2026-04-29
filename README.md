@@ -12,10 +12,10 @@ This repo just exists to demo and hopefully troubleshoot or figure out the corre
 
 Currently: 
 
-1. Basic manual file IO shown in `OpfsBasicFileIO.tsx` works in development and production, so OPFS is usable.
-2. SQLocal usage (with Kysely in place because it's practical) is shown in `SqlocalTesto.tsx`, and has issues.
-  - SQLocal behaves as expected in localhost/development environments.
-  - When in production, SQLocal falls back to the `memory` storage type for its database. So things work until the page refreshes or app closes.
+1. Basic manual file IO shown in `src/components/OpfsBasicFileIO.tsx` works in development and production, so OPFS is usable.
+2. SQLocal usage (with Kysely in place because it's practical) is shown in `src/components/SqlocalTesto.tsx`, and has issues.
+    - SQLocal behaves as expected in localhost/development environments.
+    - When in production, SQLocal falls back to the `memory` storage type for its database. So things work until the page refreshes or app closes.
 
 My confusion is from the understanding that the basic file IO implemented is using OPFS, and it works in production even though `navigator.storage.persisted` is false in that environment. 
 SQLocal is behaving as expected, but I'm wondering if that's wrong. If OPFS _does_ persist data even when `navigator.storage.persisted` is not `true`, should SQLocal be optionally able to use it? It seems like it does not attempt or give the developer the option to attempt using it.
