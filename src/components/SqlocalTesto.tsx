@@ -1,0 +1,53 @@
+import { useEffect, useState } from "react";
+import { db } from "../utils/database/db";
+
+// This file shows some basic implementation of indexed DB data read and write, 
+// to ensure it works on Capacitor- and Electron-managed platforms.
+
+// This may also be worth trying here, maybe:
+// https://stackoverflow.com/a/58646390/9319097
+// https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/persist
+
+export default function SqlocalTesto(){
+
+	let [usersData, setUsersdata] = useState<object[]>();
+
+	const getUsers = async () => {
+		console.log("Starting to search the DB for users now...");
+		const data = await db.selectFrom("user").selectAll().execute();
+		console.log("We found this user data in the DB: " + JSON.stringify(data, null, 4));
+		setUsersdata(data);
+	}
+
+	const createUsers = async () => {
+		console.log("Starting to create a user now");
+		const newUserData = await db.insertInto("user")
+			.values({username:  "exampleUser", tier: "free"})
+			.returning(["id", "tier", "username"])
+			.execute();
+
+			console.log("Created new user: " + JSON.stringify(newUserData));
+	}
+
+	useEffect(() => {
+		let userDataDisplayerDiv = document.getElementById("userDataDisplayer");
+		if (userDataDisplayerDiv){
+			userDataDisplayerDiv.innerText = JSON.stringify(usersData) || "";
+		}
+	}, [usersData]);
+
+
+	return (
+		<div className="card sqliteOpfs">
+			<p>You can create one hardcoded user. Attempting to create the user again will throw an error in the console, because a unique username constraint is applied to the database!</p>
+			<p>To delete the user, use the "Delete All Files" button in the other component and refresh the page. This deletes the database file, and that will get recreated when the page loads again.</p>
+			<button onClick={() => createUsers()}>
+				Create a user 
+			</button>
+			<button onClick={() => getUsers()}>
+				Get user data
+			</button>
+			<div id="userDataDisplayer"></div>
+		</div>
+	);
+}
