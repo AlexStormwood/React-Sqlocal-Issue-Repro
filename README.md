@@ -1,5 +1,13 @@
 # React SQLocal Issue Repro
 
+## Deployment
+
+Use this to compare behaviour to your locally-run version of this project: 
+
+https://react-sqlocal-issue-repro.netlify.app/
+
+## Info
+
 This repo just exists to demo and hopefully troubleshoot or figure out the correct usage of SQLocal with an OPFS storage type in use.
 
 Currently: 
