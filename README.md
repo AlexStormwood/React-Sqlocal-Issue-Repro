@@ -1,5 +1,13 @@
 # React SQLocal Issue Repro
 
+## Fixed!
+
+All that was missing was just correct configuration of headers for COOP/COEP. For a Netlify deployment,  the fix is what you would find in `public/_headers`.
+
+I'll investigate how this would work across Capacitor (Android/iOS) separately, but the core issue that this repo was made for is identified and fixable.
+
+Probably gonna need to move this SQLocal stuff into service workers to make it work properly across web, Electron, and Capacitor though!
+
 ## Deployment
 
 Use this to compare behaviour to your locally-run version of this project: 
